@@ -209,7 +209,7 @@ def pregunta_10():
         _c2.append(':'.join(lista))
         lista = []
 
-    respuesta_10 = pd.DataFrame(list(zip(_c1,_c2)), columns = ['_c1','_c2'])
+    respuesta_10 = pd.DataFrame(list(zip(_c1,_c2)), columns = ['_c1','_c2'], index = _c1)
     respuesta_10['_c2'] = respuesta_10['_c2'].map(lambda x: x.split(','))
 
     return respuesta_10
