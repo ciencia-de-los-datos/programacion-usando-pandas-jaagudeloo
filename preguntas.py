@@ -203,12 +203,14 @@ def pregunta_10():
     for i in letras:
         for e in range(tbl0.shape[0]):
             if i == tbl0['_c1'][e]:
-                lista.append(tbl0['_c2'][e])
+                lista.append(str(tbl0['_c2'][e]))
+                lista = sorted(lista)
         _c1.append(i)
-        _c2.append(sorted(lista))
+        _c2.append(':'.join(lista))
         lista = []
 
     respuesta_10 = pd.DataFrame(list(zip(_c1,_c2)), columns = ['_c1','_c2'])
+    respuesta_10['_c2'] = respuesta_10['_c2'].map(lambda x: x.split(','))
 
     return respuesta_10
 
