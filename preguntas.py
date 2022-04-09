@@ -22,7 +22,10 @@ def pregunta_01():
     40
 
     """
-    return
+
+    respuesta_1 = tbl0.shape[0]
+
+    return respuesta_1
 
 
 def pregunta_02():
@@ -33,7 +36,10 @@ def pregunta_02():
     4
 
     """
-    return
+
+    respuesta_2 = tbl0.shape[1]
+
+    return respuesta_2
 
 
 def pregunta_03():
@@ -50,7 +56,10 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+
+    respuesta_3 = tbl0.sort_values(['_c1'], ascending=True, ignore_index=True)['_c1'].value_counts(sort=False)
+
+    return respuesta_3
 
 
 def pregunta_04():
@@ -65,7 +74,10 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+
+    respuesta_4 = tbl0.groupby('_c1')['_c2'].mean()
+
+    return respuesta_4
 
 
 def pregunta_05():
