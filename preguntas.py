@@ -22,7 +22,10 @@ def pregunta_01():
     40
 
     """
-    return
+
+    respuesta_1 = tbl0.shape[0]
+
+    return respuesta_1
 
 
 def pregunta_02():
@@ -33,7 +36,10 @@ def pregunta_02():
     4
 
     """
-    return
+
+    respuesta_2 = tbl0.shape[1]
+
+    return respuesta_2
 
 
 def pregunta_03():
@@ -50,7 +56,10 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+
+    respuesta_3 = tbl0.sort_values(['_c1'], ascending=True, ignore_index=True)['_c1'].value_counts(sort=False)
+
+    return respuesta_3
 
 
 def pregunta_04():
@@ -65,7 +74,10 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+
+    respuesta_4 = tbl0.groupby('_c1')['_c2'].mean()
+
+    return respuesta_4
 
 
 def pregunta_05():
@@ -82,7 +94,10 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+
+    respuesta_5 = tbl0.groupby('_c1')['_c2'].max()
+
+    return respuesta_5
 
 
 def pregunta_06():
@@ -94,7 +109,10 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+
+    respuesta_6 = sorted(tbl1['_c4'].str.upper().unique().tolist())
+
+    return respuesta_6
 
 
 def pregunta_07():
@@ -110,7 +128,10 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+
+    respuesta_7 = tbl0.groupby('_c1')['_c2'].sum()
+
+    return respuesta_7
 
 
 def pregunta_08():
@@ -128,7 +149,11 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+
+    respuesta_8 = pd.read_csv("tbl0.tsv", sep="\t")
+    respuesta_8['suma'] = respuesta_8['_c0'] + respuesta_8['_c2']
+
+    return respuesta_8
 
 
 def pregunta_09():
@@ -146,7 +171,12 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+
+    respuesta_9 = pd.read_csv("tbl0.tsv", sep="\t")
+    respuesta_9['year'] = respuesta_9['_c3'].map(lambda x: x.split('-'))
+    respuesta_9['year'] = respuesta_9['year'].map(lambda x: x[0])
+
+    return respuesta_9
 
 
 def pregunta_10():
@@ -163,7 +193,26 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+
+    letras = sorted(tbl0['_c1'].unique().tolist())
+
+    _c1 = []
+    _c2 = []
+    lista = []
+
+    for i in letras:
+        for e in range(tbl0.shape[0]):
+            if i == tbl0['_c1'][e]:
+                lista.append(str(tbl0['_c2'][e]))
+                lista = sorted(lista)
+        _c1.append(i)
+        _c2.append(':'.join(lista))
+        lista = []
+
+    respuesta_10 = pd.DataFrame(list(zip(_c1,_c2)), columns = ['_c1','_c2'])
+    respuesta_10.set_index('_c1', inplace = True)
+
+    return respuesta_10
 
 
 def pregunta_11():
@@ -182,7 +231,22 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+
+    _c0 = list(set(tbl1['_c0']))
+    _c4 = []
+    lista = []
+
+    for i in _c0:
+        for e in range(tbl1.shape[0]):
+            if i == tbl1['_c0'][e]:
+                lista.append(str(tbl1['_c4'][e]))
+                lista = sorted(lista)
+        _c4.append(','.join(lista))
+        lista = []
+
+    respuesta_11 = pd.DataFrame(list(zip(_c0,_c4)), columns = ['_c0','_c4'])
+
+    return respuesta_11
 
 
 def pregunta_12():
@@ -200,7 +264,26 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+
+    _c0 = list(set(tbl2['_c0']))
+    _c5 = []
+    lista = []
+
+    r_12 = pd.read_csv("tbl2.tsv", sep="\t")
+    r_12['_c5b'] = r_12['_c5b'].astype(str)
+    r_12['_c5'] = r_12['_c5a'].str.cat(r_12['_c5b'], sep =":")
+
+    for i in _c0:
+        for e in range(r_12.shape[0]):
+            if i == r_12['_c0'][e]:
+                lista.append(r_12['_c5'][e])
+                lista = sorted(lista)
+        _c5.append(','.join(lista))
+        lista = []
+
+    respuesta_12 = pd.DataFrame(list(zip(_c0,_c5)), columns = ['_c0','_c5'])
+
+    return respuesta_12
 
 
 def pregunta_13():
@@ -217,4 +300,18 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+
+    _c0 = tbl2['_c0'].tolist()
+    _c1 = []
+    _c5b = tbl2['_c5b'].tolist()
+
+    for i in _c0:
+        for e in range(len(tbl0['_c1'])):
+            if tbl0['_c0'][e] == i:
+                _c1.append(tbl0['_c1'][e])
+
+    r_13 = pd.DataFrame(list(zip(_c0,_c1, _c5b)), columns = ['_c0', '_c1', '_c5b'])
+
+    respuesta_13 = r_13.groupby('_c1')['_c5b'].sum()
+
+    return respuesta_13
