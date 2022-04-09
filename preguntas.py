@@ -210,6 +210,7 @@ def pregunta_10():
         lista = []
 
     respuesta_10 = pd.DataFrame(list(zip(_c1,_c2)), columns = ['_c1','_c2'])
+    respuesta_10.set_index('_c1', inplace = True)
 
     return respuesta_10
 
