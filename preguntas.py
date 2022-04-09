@@ -94,7 +94,10 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+
+    respuesta_5 = tbl0.groupby('_c1')['_c2'].max()
+
+    return respuesta_5
 
 
 def pregunta_06():
@@ -106,7 +109,10 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+
+    respuesta_6 = sorted(tbl1['_c4'].str.upper().unique().tolist())
+
+    return respuesta_6
 
 
 def pregunta_07():
@@ -122,7 +128,10 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+
+    respuesta_7 = tbl0.groupby('_c1')['_c2'].sum()
+
+    return respuesta_7
 
 
 def pregunta_08():
@@ -140,7 +149,11 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+
+    respuesta_8 = pd.read_csv("tbl0.tsv", sep="\t")
+    respuesta_8['suma'] = respuesta_8['_c0'] + respuesta_8['_c2']
+
+    return respuesta_8
 
 
 def pregunta_09():
@@ -158,7 +171,12 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+
+    respuesta_9 = pd.read_csv("tbl0.tsv", sep="\t")
+    respuesta_9['year'] = respuesta_9['_c3'].map(lambda x: x.split('-'))
+    respuesta_9['year'] = respuesta_9['year'].map(lambda x: x[0])
+
+    return respuesta_9
 
 
 def pregunta_10():
@@ -175,7 +193,24 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+
+    letras = sorted(tbl0['_c1'].unique().tolist())
+
+    _c1 = []
+    _c2 = []
+    lista = []
+
+    for i in letras:
+        for e in range(tbl0.shape[0]):
+            if i == tbl0['_c1'][e]:
+                lista.append(tbl0['_c2'][e])
+        _c1.append(i)
+        _c2.append(sorted(lista))
+        lista = []
+
+    respuesta_10 = pd.DataFrame(list(zip(_c1,_c2)), columns = ['_c1','_c2'])
+
+    return respuesta_10
 
 
 def pregunta_11():
